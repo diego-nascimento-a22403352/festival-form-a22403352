@@ -20,6 +20,7 @@ def concerto_view(request, concerto_id):
     context = {'concerto': concerto}
     return render(request, 'festival/concerto.html', context)
 
+# Ponto 4 - View para criar concerto
 def criar_concerto_view(request):
     if request.method == 'POST':
         form = ConcertoForm(request.POST)
@@ -47,6 +48,7 @@ def editar_concerto_view(request, concerto_id):
     }
     return render(request, 'festival/editar_concerto.html', context)
 
+# Ponto 4 - View para apagar concerto
 def apagar_concerto_view(request, concerto_id):
     concerto = get_object_or_404(Concerto, id=concerto_id)
     if request.method == 'POST':
@@ -54,10 +56,12 @@ def apagar_concerto_view(request, concerto_id):
         return redirect('dias')
     return redirect('concerto', concerto_id=concerto.id)
 
+# Ponto 7 - View para editar palco
 def editar_palco_view(request, palco_id):
     palco = get_object_or_404(Palco, id=palco_id)
     
     if request.method == 'POST':
+        # Necessário request.FILES para lidar com imagens
         form = PalcoForm(request.POST, request.FILES, instance=palco)
         if form.is_valid():
             form.save()
